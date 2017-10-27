@@ -26,6 +26,7 @@ public class AlumnoDialog extends javax.swing.JDialog
 	{
 		super(parent, modal);
 		initComponents();
+                setLocationRelativeTo(null);
 	}
 	
 	
@@ -34,7 +35,7 @@ public class AlumnoDialog extends javax.swing.JDialog
 	{
 		borrarCampos();
 		
-		estadoComboBox.setSelectedItem("A");
+		estadoComboBox.setSelectedItem('A');
 		
 		setVisible(true);
 		
@@ -109,6 +110,7 @@ public class AlumnoDialog extends javax.swing.JDialog
         cancelarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -142,11 +144,6 @@ public class AlumnoDialog extends javax.swing.JDialog
         jLabel8.setText("Promedio");
 
         estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
-        estadoComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estadoComboBoxActionPerformed(evt);
-            }
-        });
 
         jLabel9.setText("Estado");
 
@@ -281,10 +278,6 @@ public class AlumnoDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_formWindowClosing
         guardar = false;
     }//GEN-LAST:event_formWindowClosing
-
-    private void estadoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estadoComboBoxActionPerformed
 
 	private Alumno formularioAAlumno(Alumno alu) throws PersonaInvalidaException
 	{

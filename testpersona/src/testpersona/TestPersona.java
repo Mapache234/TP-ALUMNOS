@@ -30,7 +30,8 @@ public class TestPersona
 		
 		try
 		{
-			pepe = new Alumno(23456789, "Pepe",'M', new MiCalendar(10, 2, 1998), 20, 6, "INF");
+			pepe = new Alumno(23456789, "Pepe",'M', new MiCalendar(13, 4, 1998), 20, 6, "INF",
+                                new MiCalendar(10, 2, 2016), 'A');
 		}
 		catch(PersonaInvalidaException | ExcFechaInvalida ex)
 		{
@@ -74,7 +75,7 @@ public class TestPersona
 		
 		try
 		{
-			fecha = new MiCalendar(5, 13, 1999);
+			fecha = new MiCalendar(13, 4, 1998);
 		}
 		catch(ExcFechaInvalida ex)
 		{

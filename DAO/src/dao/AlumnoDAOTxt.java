@@ -102,8 +102,30 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
 	
 	@Override
 	public void eliminar(Alumno obj) throws DAOException
-	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	{       //paraborrar
+                try
+		{
+                        archivoRandomAccessFile.seek(0);
+			long pos = archivoRandomAccessFile.getFilePointer(); //Devuelve la posición del cursor.
+                        
+			String linea;
+			while((linea = archivoRandomAccessFile.readLine()) != null)
+			{
+				if(Integer.valueOf(linea.substring(0, 8)).equals(obj.getDni()))
+				{
+                                        archivoRandomAccessFile.seek(pos);
+					archivoRandomAccessFile.writeBytes(obj.toString() + System.lineSeparator());
+					return;
+				}
+                                pos = archivoRandomAccessFile.getFilePointer(); //Devuelve la posición del cursor.
+			}
+		}
+		catch(IOException ex)
+		{
+			Logger.getLogger(AlumnoDAOTxt.class.getName()).log(Level.SEVERE, null, ex);
+		}
+                //paraborrar
+		//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 	@Override
@@ -148,6 +170,7 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
 			while((linea = archivoRandomAccessFile.readLine()) != null)
 			{
 				alu = new Alumno(linea);
+                                if (alu.getEstado() != 'E')//paraborrar
 				alumnos.add(alu);
 			}
 			
@@ -165,11 +188,53 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
 
     @Override
     public List<Alumno> getAltas() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Alumno> alumnos = new LinkedList<>();
+		
+		try
+		{
+			archivoRandomAccessFile.seek(0);
+			
+			String linea;
+			Alumno alu;
+			while((linea = archivoRandomAccessFile.readLine()) != null)
+			{
+                                alu = new Alumno(linea);
+				if (alu.getEstado() == 'A')
+                                    alumnos.add(alu);
+			}
+			
+			return alumnos;
+		}
+		catch(IOException | PersonaInvalidaException ex)
+		{
+			Logger.getLogger(AlumnoDAOTxt.class.getName()).log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+		}
     }
 
     @Override
     public List<Alumno> getBajas() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Alumno> alumnos = new LinkedList<>();
+		
+		try
+		{
+			archivoRandomAccessFile.seek(0);
+			
+			String linea;
+			Alumno alu;
+			while((linea = archivoRandomAccessFile.readLine()) != null)
+			{
+                                alu = new Alumno(linea);
+				if (alu.getEstado() == 'B')
+                                    alumnos.add(alu);
+			}
+			
+			return alumnos;
+		}
+		catch(IOException | PersonaInvalidaException ex)
+		{
+			Logger.getLogger(AlumnoDAOTxt.class.getName()).log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+		}
     }
 }

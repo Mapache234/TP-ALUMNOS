@@ -54,12 +54,12 @@ public class ABMAlumno extends javax.swing.JFrame
         nuevoButton = new javax.swing.JButton();
         editarButton = new javax.swing.JButton();
         eliminarButton = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        AltasCheckBox = new javax.swing.JCheckBox();
+        BajasCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         archivoRutaText = new javax.swing.JTextField();
         seleccionarArchivoButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        refrescarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,9 +97,9 @@ public class ABMAlumno extends javax.swing.JFrame
             }
         });
 
-        jCheckBox1.setText("Altas");
+        AltasCheckBox.setText("Altas");
 
-        jCheckBox2.setText("Bajas");
+        BajasCheckBox.setText("Bajas");
 
         jLabel1.setText("Archivo");
 
@@ -110,10 +110,10 @@ public class ABMAlumno extends javax.swing.JFrame
             }
         });
 
-        jButton1.setText("Refrescar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        refrescarButton.setText("Refrescar");
+        refrescarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                refrescarButtonActionPerformed(evt);
             }
         });
 
@@ -128,16 +128,14 @@ public class ABMAlumno extends javax.swing.JFrame
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(refrescarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(editarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nuevoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2))
+                            .addComponent(AltasCheckBox)
+                            .addComponent(BajasCheckBox))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -145,7 +143,7 @@ public class ABMAlumno extends javax.swing.JFrame
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(seleccionarArchivoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1))))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,10 +152,10 @@ public class ABMAlumno extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox1)
+                            .addComponent(AltasCheckBox)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox2))
+                        .addComponent(BajasCheckBox))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(archivoRutaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(seleccionarArchivoButton)))
@@ -170,7 +168,7 @@ public class ABMAlumno extends javax.swing.JFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(eliminarButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(refrescarButton)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
                 .addContainerGap())
@@ -216,7 +214,12 @@ public class ABMAlumno extends javax.swing.JFrame
 	
     private void nuevoButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_nuevoButtonActionPerformed
     {//GEN-HEADEREND:event_nuevoButtonActionPerformed
-		Alumno alu = alumnoDialog.mostrarDialogoCrear();
+                if(archivoRutaText.getText().equals(""))
+		{
+                    JOptionPane.showMessageDialog(this, "Debe seleccionar un fichero", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+		}	
+                Alumno alu = alumnoDialog.mostrarDialogoCrear();
 		
 		if(alu == null)
 			return;
@@ -238,16 +241,29 @@ public class ABMAlumno extends javax.swing.JFrame
 
     private void editarButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_editarButtonActionPerformed
     {//GEN-HEADEREND:event_editarButtonActionPerformed
-        int filaSel = alumnosTable.getSelectedRow();
+            if(archivoRutaText.getText().equals(""))
+		{
+                        JOptionPane.showMessageDialog(this, "Debe seleccionar un fichero", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+		}
+                int filaSel = alumnosTable.getSelectedRow();
 		
 		if(filaSel == -1)
 		{
 			JOptionPane.showMessageDialog(this, "Debe seleccionar una fila", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
+                
 		Alumno alu = alumnos.get(filaSel);
-		
+                
+		//paraborrar
+                if(alu.getEstado() == 'E')
+		{
+                        JOptionPane.showMessageDialog(this, "No se puede modificar un registro eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+		}
+                //paraborrar
+                
 		if(!alumnoDialog.mostraDialogoEditar(alu))
 		{
 			return;
@@ -269,20 +285,66 @@ public class ABMAlumno extends javax.swing.JFrame
     private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_eliminarButtonActionPerformed
     {//GEN-HEADEREND:event_eliminarButtonActionPerformed
         //No se puede en TXT
+                //paraborrar
+                if(archivoRutaText.getText().equals(""))
+		{
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un fichero", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+                int filaSel = alumnosTable.getSelectedRow();
+		
+		if(filaSel == -1)
+		{
+			JOptionPane.showMessageDialog(this, "Debe seleccionar una fila", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		Alumno alu = alumnos.get(filaSel);
+                
+                alu.setEstado('E');
+                
+		try
+		{
+			dao.eliminar(alu);
+		}
+		catch(DAOException ex)
+		{
+			Logger.getLogger(ABMAlumno.class.getName()).log(Level.SEVERE, null, ex);
+			return;
+		}
+		
+		modelo.fireTableDataChanged();
+                //paraborrar
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try
-        {
-                alumnos = dao.getTodos();
-        }
-        catch(DAOException ex)
-        {
-                Logger.getLogger(ABMAlumno.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        modelo.setLista(alumnos);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void refrescarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescarButtonActionPerformed
+	
+		if(archivoRutaText.getText().equals(""))
+		{
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un fichero", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+                try
+                {
+                if(AltasCheckBox.isSelected() && BajasCheckBox.isSelected()
+                   || !AltasCheckBox.isSelected() && !BajasCheckBox.isSelected()){
+                    alumnos = dao.getTodos();
+                }else{                    
+                        if(AltasCheckBox.isSelected()){
+                            alumnos = dao.getAltas();
+                        }else{
+                                alumnos = dao.getBajas();
+                        }
+                }
+                }
+                catch(DAOException ex)
+                {
+                        Logger.getLogger(ABMAlumno.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                modelo.setLista(alumnos);
+                //modelo.fireTableDataChanged();
+    }//GEN-LAST:event_refrescarButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -341,16 +403,16 @@ public class ABMAlumno extends javax.swing.JFrame
 	private AlumnoDialog alumnoDialog;
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox AltasCheckBox;
+    private javax.swing.JCheckBox BajasCheckBox;
     private javax.swing.JTable alumnosTable;
     private javax.swing.JTextField archivoRutaText;
     private javax.swing.JButton editarButton;
     private javax.swing.JButton eliminarButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton nuevoButton;
+    private javax.swing.JButton refrescarButton;
     private javax.swing.JButton seleccionarArchivoButton;
     // End of variables declaration//GEN-END:variables
 }

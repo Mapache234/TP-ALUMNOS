@@ -13,12 +13,14 @@ import miCalendar.MiCalendar;
  */
 public class Alumno extends Persona
 {
-	public Alumno(int dni, String apyn, char sexo, MiCalendar fechaNac, int cantMatAprob, double promedio, String carrera) throws PersonaInvalidaException
+	public Alumno(int dni, String apyn, char sexo, MiCalendar fechaNac, int cantMatAprob, double promedio, String carrera, MiCalendar fechaIngreso, char estado) throws PersonaInvalidaException
 	{
 		super(dni, apyn, sexo, fechaNac);
 		setCantMatAprob(cantMatAprob);
 		setPromedio(promedio);
 		setCarrera(carrera);
+                setFechaIngreso(fechaIngreso);
+                setEstado(estado);
 	}
 	
 	
@@ -30,6 +32,7 @@ public class Alumno extends Persona
 		setPromedio(Double.valueOf(campos[1]));
 		setCarrera(campos[2]);
                 setFechaIngreso(new MiCalendar(campos[3]));
+                setEstado(campos[4].charAt(0));
 	}
 	
 	
@@ -37,9 +40,10 @@ public class Alumno extends Persona
 	private double promedio;
 	private String carrera;
 	private MiCalendar fechaIngreso;
-        //private String estado;
+        private char estado;
+        //private char[] Estados = new char[] {'A', 'B', 'E'};
 	private static final String[] CARRERAS = new String[] {"INF", "CON", "ELE", "MED"};
-        //private static final String[] ESTADOS = new String[] {"A","B"};
+        //private static final String[] ESTADOS = new String[] {"A","B","E"};
 
 	public Alumno()
 	{
@@ -87,22 +91,23 @@ public class Alumno extends Persona
 		this.fechaIngreso = fechaIngreso;
 	}
 	
+        public char getEstado()
+	{
+		return estado;
+	}
+
+	public final void setEstado(char estado)
+	{
+                this.estado = estado;
+        }
 	
 	@Override
 	public String toString()
 	{
-		return super.toString() + "\t" + cantMatAprob + "\t" + promedio + "\t" + carrera + "\t" + fechaIngreso;
+		return super.toString() + "\t" + cantMatAprob + "\t" + promedio + "\t" + carrera + "\t" + fechaIngreso + "\t" + estado;
 	}
 
-	public char getEstado()
-	{
-		return 'A';
-	}
-
-	public void setEstado(char charAt)
-	{
-	//	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+	
 	
 	
 	

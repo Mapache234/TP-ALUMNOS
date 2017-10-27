@@ -111,6 +111,11 @@ public class ABMAlumno extends javax.swing.JFrame
         });
 
         jButton1.setText("Refrescar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,6 +270,19 @@ public class ABMAlumno extends javax.swing.JFrame
     {//GEN-HEADEREND:event_eliminarButtonActionPerformed
         //No se puede en TXT
     }//GEN-LAST:event_eliminarButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try
+        {
+                alumnos = dao.getTodos();
+        }
+        catch(DAOException ex)
+        {
+                Logger.getLogger(ABMAlumno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        modelo.setLista(alumnos);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 	/**
 	 * @param args the command line arguments

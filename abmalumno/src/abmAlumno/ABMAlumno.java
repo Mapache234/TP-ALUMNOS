@@ -62,6 +62,7 @@ public class ABMAlumno extends javax.swing.JFrame
         refrescarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         alumnosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,9 +75,11 @@ public class ABMAlumno extends javax.swing.JFrame
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        alumnosTable.setEnabled(false);
         jScrollPane1.setViewportView(alumnosTable);
 
         nuevoButton.setText("Nuevo");
+        nuevoButton.setEnabled(false);
         nuevoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nuevoButtonActionPerformed(evt);
@@ -84,6 +87,7 @@ public class ABMAlumno extends javax.swing.JFrame
         });
 
         editarButton.setText("Editar");
+        editarButton.setEnabled(false);
         editarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editarButtonActionPerformed(evt);
@@ -91,6 +95,7 @@ public class ABMAlumno extends javax.swing.JFrame
         });
 
         eliminarButton.setText("Eliminar");
+        eliminarButton.setEnabled(false);
         eliminarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminarButtonActionPerformed(evt);
@@ -98,10 +103,18 @@ public class ABMAlumno extends javax.swing.JFrame
         });
 
         AltasCheckBox.setText("Altas");
+        AltasCheckBox.setEnabled(false);
 
         BajasCheckBox.setText("Bajas");
+        BajasCheckBox.setEnabled(false);
 
         jLabel1.setText("Archivo");
+
+        archivoRutaText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                archivoRutaTextFocusLost(evt);
+            }
+        });
 
         seleccionarArchivoButton.setText("...");
         seleccionarArchivoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +124,7 @@ public class ABMAlumno extends javax.swing.JFrame
         });
 
         refrescarButton.setText("Refrescar");
+        refrescarButton.setEnabled(false);
         refrescarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refrescarButtonActionPerformed(evt);
@@ -208,6 +222,14 @@ public class ABMAlumno extends javax.swing.JFrame
 			Logger.getLogger(ABMAlumno.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
+                alumnosTable.setEnabled(true);
+                BajasCheckBox.setEnabled(true);
+                AltasCheckBox.setEnabled(true);
+                nuevoButton.setEnabled(true);
+                editarButton.setEnabled(true);
+                eliminarButton.setEnabled(true);
+                refrescarButton.setEnabled(true);
+                
 		modelo.setLista(alumnos);
     }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
 	
@@ -345,6 +367,19 @@ public class ABMAlumno extends javax.swing.JFrame
                 modelo.setLista(alumnos);
                 //modelo.fireTableDataChanged();
     }//GEN-LAST:event_refrescarButtonActionPerformed
+
+    private void archivoRutaTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_archivoRutaTextFocusLost
+            if(archivoRutaText.getText().equals(""))
+		{
+                    alumnosTable.setEnabled(false);
+                    BajasCheckBox.setEnabled(false);
+                    AltasCheckBox.setEnabled(false);
+                    nuevoButton.setEnabled(false);
+                    editarButton.setEnabled(false);
+                    eliminarButton.setEnabled(false);
+                    refrescarButton.setEnabled(false);
+                }
+    }//GEN-LAST:event_archivoRutaTextFocusLost
 
 	/**
 	 * @param args the command line arguments

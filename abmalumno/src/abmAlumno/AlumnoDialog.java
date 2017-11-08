@@ -6,8 +6,10 @@
 package abmAlumno;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import miCalendar.MiCalendar;
 import persona.Alumno;
 import persona.PersonaInvalidaException;
@@ -261,7 +263,66 @@ public class AlumnoDialog extends javax.swing.JDialog
 
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_guardarButtonActionPerformed
     {//GEN-HEADEREND:event_guardarButtonActionPerformed
-		guardar = true;
+                if((((Number)(cantMatAprobFormattedTextField.getValue())).intValue())<0){
+                    JOptionPane.showMessageDialog(this, "La cantidad de materias no puede ser negativa", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                int promedio = (((Number)(promedioFormattedTextField.getValue())).intValue());
+                if(promedio < 0 || promedio > 10){
+                    JOptionPane.showMessageDialog(this, "El promedio debe ser entre 0 y 10", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                MiCalendar fechIngreso = new MiCalendar(fechaIngrDateChooser.getCalendar());
+                MiCalendar fechNac = new MiCalendar(fechaNacDateChooser.getCalendar());
+                
+                MiCalendar hoy = new MiCalendar(Calendar.getInstance());
+                
+                if(fechNac.compareTo(hoy) > 0){
+                    JOptionPane.showMessageDialog(this, "Fecha nacimiento mayor que hoy", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if(fechIngreso.compareTo(hoy) > 0){
+                    JOptionPane.showMessageDialog(this, "Fecha de Ingreso mayor que hoy", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                fechNac.setAño(fechNac.getAño()+10);
+                if(fechNac.compareTo(fechIngreso) > 0){
+                    JOptionPane.showMessageDialog(this, "El alumno debe tener por lo menos 10 años", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                
+                
+                /*
+                if(fechNac.compareTo(fechIngreso)<0){ 
+                    JOptionPane.showMessageDialog(this, "El alumno debe tener por lo menos 10 años", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                
+                if((fechIngreso.getAño()- fechNac.getAño())==10){
+                    if((fechIngreso.getMes() - fechNac.getMes()) == 0){
+                        if((fechIngreso.getDia() - fechNac.getDia()) < 0){
+                           JOptionPane.showMessageDialog(this, "El alumno debe tener por lo menos 10 años", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }   
+                    }else{
+                        if((fechIngreso.getMes() - fechNac.getMes()) < 0){
+                            JOptionPane.showMessageDialog(this, "El alumno debe tener por lo menos 10 años", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                }else{
+                    if((fechIngreso.getAño() - fechNac.getAño()) < 10){
+                        JOptionPane.showMessageDialog(this, "El alumno debe tener por lo menos 10 años", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }                
+                */
+                guardar = true;
 		
 		setVisible(false);
     }//GEN-LAST:event_guardarButtonActionPerformed
@@ -399,10 +460,13 @@ public class AlumnoDialog extends javax.swing.JDialog
                 dniFormattedTextField.setValue(null);
                 apynTextField.setText("");
                 dniFormattedTextField.setValue(null);
-                cantMatAprobFormattedTextField.setValue(null);
-                promedioFormattedTextField.setValue(null);
+                cantMatAprobFormattedTextField.setValue(0);
+                promedioFormattedTextField.setValue(0);
                 fechaIngrDateChooser.setCalendar(null);
                 fechaNacDateChooser.setCalendar(null);
+                sexoComboBox.setSelectedIndex(0);
+                carreraComboBox.setSelectedIndex(0);
+                estadoComboBox.setSelectedIndex(0);
 	//	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 

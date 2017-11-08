@@ -135,7 +135,7 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
 		try
 		{
                         archivoRandomAccessFile.seek(0);
-			long pos = 0; //Devuelve la posición del cursor.
+			long pos = archivoRandomAccessFile.getFilePointer(); //Devuelve la posición del cursor.
                         
 			String linea;
 			while((linea = archivoRandomAccessFile.readLine()) != null)

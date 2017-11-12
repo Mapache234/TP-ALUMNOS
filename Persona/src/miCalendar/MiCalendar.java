@@ -5,6 +5,7 @@
  */
 package miCalendar;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -49,6 +50,11 @@ public class MiCalendar extends GregorianCalendar
 		setMes(cal.get(MONTH) + 1);
 		setAño(cal.get(YEAR));
 	}
+
+	public MiCalendar(Date date)
+	{
+		setTimeInMillis(date.getTime());
+	}
 	
 	
 	public int getDia()
@@ -92,7 +98,9 @@ public class MiCalendar extends GregorianCalendar
 	{
 		return String.format("%02d/%02d/%04d", getDia(), getMes(), getAño());
 	}
-	
-	
-	
+
+	public Date toDate()
+	{
+		return new Date(getTimeInMillis());
+	}
 }

@@ -31,8 +31,6 @@ public class AlumnoDialog extends javax.swing.JDialog
                 setLocationRelativeTo(null);
 	}
 	
-	
-	
 	Alumno mostrarDialogoCrear()
 	{
 		borrarCampos();
@@ -41,7 +39,7 @@ public class AlumnoDialog extends javax.swing.JDialog
 		
 		setVisible(true);
 		
-		if(guardar)
+		if(guardar){
 			try 
 			{
 				return formularioAAlumno(null);
@@ -51,10 +49,9 @@ public class AlumnoDialog extends javax.swing.JDialog
 				Logger.getLogger(AlumnoDialog.class.getName()).log(Level.SEVERE, null, ex);
 				return null;
 			}
-		
+                }
 		return null;
 	}
-	
 	
 	boolean mostraDialogoEditar(Alumno alu)
 	{
@@ -268,6 +265,21 @@ public class AlumnoDialog extends javax.swing.JDialog
                     return;
                 }
                 
+                if(apynTextField.getText().equals("")){
+                    JOptionPane.showMessageDialog(this, "El Nombre y Apellido no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                if(fechaIngrDateChooser.getDate() == null){
+                    JOptionPane.showMessageDialog(this, "Debe ingresar la fecha de Ingreso", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                if(fechaNacDateChooser.getDate() == null){
+                JOptionPane.showMessageDialog(this, "Debe ingresar la fecha de nacimiento", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                    
                 int promedio = (((Number)(promedioFormattedTextField.getValue())).intValue());
                 if(promedio < 0 || promedio > 10){
                     JOptionPane.showMessageDialog(this, "El promedio debe ser entre 0 y 10", "Error", JOptionPane.ERROR_MESSAGE);
@@ -293,8 +305,6 @@ public class AlumnoDialog extends javax.swing.JDialog
                     JOptionPane.showMessageDialog(this, "El alumno debe tener por lo menos 10 años", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                
-                
                 
                 /*
                 if(fechNac.compareTo(fechIngreso)<0){ 
@@ -458,7 +468,7 @@ public class AlumnoDialog extends javax.swing.JDialog
 	private void borrarCampos()
 	{
                 dniFormattedTextField.setValue(null);
-                apynTextField.setText("");
+                apynTextField.setText(null);
                 dniFormattedTextField.setValue(null);
                 cantMatAprobFormattedTextField.setValue(0);
                 promedioFormattedTextField.setValue(0);
